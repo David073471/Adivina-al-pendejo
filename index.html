@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Adivina Quién - Tablero</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #1e1e2f;
+    color: white;
+}
+
+.contenedor {
+    text-align: center;
+    width: 100%;
+    max-width: none;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+
+
+.tablero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 35px 45px;
+
+    width: 95%;      /* 👈 usa casi todo el ancho */
+    max-width: 1800px; /* más grande */
+    margin: 50px auto;
+}
+
+.carta img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 8px auto;
+}
+
+.carta img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+#resetBtn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #ff4d6d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#resetBtn:hover {
+    background: #ff2e55;
+}
+
+.carta img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+.carta.descartado {
+    opacity: 0.2;
+    transform: scale(0.9);
+    filter: grayscale(100%);
+}
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Adivina Al ezquiso</h1>
+    <p>Haz click en un personaje para descartarlo.</p>
+    <div class="tablero" id="tablero"></div>
+    <button id="resetBtn">Reiniciar tablero</button>
+    <br><br><br><br><br><br>
+</div>
+
+<script>
+
+const personajes = [
+    {
+        nombre: "Deivid",
+        imagen: "img/deivid.jpg"
+    },
+    {
+        nombre: "Danyo",
+        imagen: "img/danyo.jpg"
+    },
+    {
+        nombre: "Xander",
+        imagen: "img/xander.jpg"
+    },
+     {
+        nombre: "Fishi",
+        imagen: "img/fishi.jpg"
+     },
+    {
+        nombre: "Feuille",
+        imagen: "img/feuille.jpg"
+    },
+     {
+        nombre: "zucaritas",
+        imagen: "img/zucaritas.jpg"
+    },
+     {
+        nombre: "kmanko",
+        imagen: "img/kmanko.jpg"
+    },
+     {
+        nombre: "kanon",
+        imagen: "img/kanon.jpg"
+    },
+     {
+        nombre: "amcu",
+        imagen: "img/amcu.jpg"
+    },
+     {
+        nombre: "Bon",
+        imagen: "img/bon.jpg"
+    },
+     {
+        nombre: "Kilih",
+        imagen: "img/kilih.jpg"
+    },
+     {
+        nombre: "Jc22",
+        imagen: "img/jc22.jpg"
+    },
+     {
+        nombre: "Nico",
+        imagen: "img/nico.jpg"
+     },
+     {
+        nombre: "Matex",
+        imagen: "img/matex.jpg"
+     },
+      {
+        nombre: "Silver",
+        imagen: "img/silver.jpg"
+     },
+     {
+        nombre: "Pipus",
+        imagen: "img/pipus.jpg"
+     },
+     {
+        nombre: "Yaro",
+        imagen: "img/yaro.jpg"
+     },
+      {
+        nombre: "Yaroah",
+        imagen: "img/yaroah.jpg"
+     },
+      {
+        nombre: "Noah",
+        imagen: "img/noah.jpg"
+     },
+      {
+        nombre: "Magenta",
+        imagen: "img/magenta.jpg"
+     },
+      {
+        nombre: "Riven",
+        imagen: "img/riven.jpg"
+     },
+     {
+        nombre: "Lilith",
+        imagen: "img/lilith.jpg"
+     },
+     {
+        nombre: "Manchitas",
+        imagen: "img/manchitas.jpg"
+     },
+     {
+        nombre: "Drakaxx",
+        imagen: "img/drakaxx.jpg"
+     },
+     {
+        nombre: "Bimbo",
+        imagen: "img/bimbo.jpg"
+     },
+
+];
+
+const tablero = document.getElementById("tablero");
+
+personajes.forEach(personaje => {
+    const carta = document.createElement("div");
+    carta.classList.add("carta");
+
+    carta.innerHTML = `
+        <img src="${personaje.imagen}">
+        <p>${personaje.nombre}</p>
+    `;
+
+    carta.addEventListener("click", () => {
+        carta.classList.toggle("descartado");
+    });
+
+    tablero.appendChild(carta);
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+    const cartas = document.querySelectorAll(".carta");
+    cartas.forEach(carta => {
+        carta.classList.remove("descartado");
+    });
+});
+});
+
+</script>
+
+
+</body>
+</html>
