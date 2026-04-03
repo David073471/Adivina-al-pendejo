@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Adivina Quién - Tablero</title>
+<title>Adivina al Ezquiso</title>
 
 <style>
 * {
@@ -35,8 +35,8 @@ h1 {
 
     gap: 35px 45px;
 
-    width: 95%;      /* 👈 usa casi todo el ancho */
-    max-width: 1800px; /* más grande */
+    width: 95%;
+    max-width: 1800px;
     margin: 50px auto;
 }
 
@@ -54,7 +54,7 @@ h1 {
     border-radius: 8px;
 }
 
-#resetBtn {
+#resetBtn, #revealBtn {
     margin-top: 20px;
     padding: 12px 25px;
     border: none;
@@ -66,7 +66,7 @@ h1 {
     transition: 0.2s;
 }
 
-#resetBtn:hover {
+#resetBtn:hover, #revealBtn:hover {
     background: #ff2e55;
 }
 
@@ -91,9 +91,13 @@ h1 {
 <div class="contenedor">
     <h1>Adivina Al ezquiso</h1>
     <p>Haz click en un personaje para descartarlo.</p>
+    <button id="revealBtn">Mostrar personaje secreto</button>
+
+<div id="secreto" style="display:none; margin-top:20px;"></div>
     <div class="tablero" id="tablero"></div>
     <button id="resetBtn">Reiniciar tablero</button>
     <br><br><br><br><br><br>
+    
 </div>
 
 <script>
@@ -204,6 +208,13 @@ const personajes = [
 
 const tablero = document.getElementById("tablero");
 
+let personajeSecreto;
+
+function elegirPersonajeSecreto() {
+    const randomIndex = Math.floor(Math.random() * personajes.length);
+    personajeSecreto = personajes[randomIndex];
+}
+
 personajes.forEach(personaje => {
     const carta = document.createElement("div");
     carta.classList.add("carta");
@@ -218,13 +229,31 @@ personajes.forEach(personaje => {
     });
 
     tablero.appendChild(carta);
+});
 
-    document.getElementById("resetBtn").addEventListener("click", () => {
-    const cartas = document.querySelectorAll(".carta");
-    cartas.forEach(carta => {
+const secretoDiv = document.getElementById("secreto");
+
+document.getElementById("revealBtn").addEventListener("click", () => {
+
+    elegirPersonajeSecreto();
+
+    secretoDiv.style.display = "block";
+
+    secretoDiv.innerHTML = `
+        <div class="carta">
+            <img src="${personajeSecreto.imagen}">
+            <p>${personajeSecreto.nombre}</p>
+        </div>
+    `;
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+    document.querySelectorAll(".carta").forEach(carta => {
         carta.classList.remove("descartado");
     });
-});
+
+    const viejaCarta = document.getElementById("cartaSecreta");
+    if (viejaCarta) viejaCarta.remove();
 });
 
 </script>
